@@ -51,7 +51,7 @@ var media = process.argv[3];
       console.log("My 20 Most Recent Tweets\n");
       for (var i = 0; i < tweets.length; i++) {
         console.log("Tweet #" + (tweets.length - i) + ": " + tweets[i].text);  
-        console.log(tweets[i].created_at);
+        console.log(tweets[i].created_at + "\n");
       }
           
     }
