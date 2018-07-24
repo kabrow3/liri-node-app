@@ -24,11 +24,11 @@ var media = process.argv[3];
       break;
     
     case "spotify-this-song":
-      spotify();
+      thisSong();
       break;
     
     case "movie-this":
-      movie();
+      thisMovie();
       break;
     
     case "do-what-it-says":
@@ -58,7 +58,7 @@ var media = process.argv[3];
   });
 };
 
-function spotify() {
+function thisSong() {
   if (media === undefined) { 
     media = "The Sign";
   };
@@ -77,17 +77,17 @@ function spotify() {
   }); 
 };
 
-function movie() {
+function thisMovie() {
   if (media === undefined) {
     media = "Mr. Nobody";
   };
 
-  var queryUrl = "http://www.omdbapi.com/?t=" + media + "&apikey=trilogy";
+  var queryUrl = "http://www.omdbapi.com/?apikey=trilogy&t=" + media;
   
   request(queryUrl, function(error, response, body) {
     
     if (!error && response.statusCode === 200) {
-      var film = JSON.parse.body;
+      var film = JSON.parse(body);
       console.log("-------------------------------");
       console.log("OMDB RESULTS");
       console.log("Title: " + film.Title);
@@ -105,7 +105,25 @@ function movie() {
 };
 
 function doWhat() {
-
+  fs.readFile("./random.txt", "utf8", function (error, data) {
+    var dataArr = data.split(",");
+    command = dataArr[0];
+    media = dataArr[1];
+    switch (command) {
+      case "my-tweets":
+        tweets();
+        break;
+      case "spotify-this-song":
+        thisSong();
+        break;
+      case "movie-this":
+        thisMovie();
+        break;
+      case "do-what-it-says":
+        doWhat();
+        break;
+    }
+  });
 };
 
     
